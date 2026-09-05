@@ -1,0 +1,973 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Trading Saham dari Nol — ebook interaktif untuk memahami fondasi trading saham sebelum masuk ke eksekusi pasar.">
+<title>Trading Saham dari Nol — Ebook Interaktif</title>
+<style>
+:root{
+  --bg:#f6f7f5; --surface:#fff; --surface2:#eef1ed; --text:#17201b; --muted:#66706a;
+  --line:#dce2dd; --accent:#173f2c; --accent2:#2e7653; --accent-soft:#e4efe8;
+  --warn:#8b6417; --warn-bg:#fff7df; --danger:#8b3737; --danger-bg:#fff0f0;
+  --shadow:0 18px 50px rgba(23,32,27,.08); --radius:22px; --sidebar:280px;
+}
+[data-theme="dark"]{
+  --bg:#101512; --surface:#171d19; --surface2:#202822; --text:#eef4ef; --muted:#a8b3ab;
+  --line:#303a33; --accent:#a8d7bb; --accent2:#70bd91; --accent-soft:#20392b;
+  --warn:#e4bd67; --warn-bg:#302814; --danger:#ef9a9a; --danger-bg:#321b1b;
+  --shadow:0 18px 50px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.7}
+button,a{font:inherit}
+a{color:inherit}
+.progress{position:fixed;z-index:1000;top:0;left:0;height:4px;width:0;background:var(--accent2);transition:width .12s}
+.topbar{position:fixed;z-index:900;top:4px;left:0;right:0;height:64px;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 22px}
+.brand{font-weight:850;letter-spacing:-.03em}
+.top-actions{margin-left:auto;display:flex;gap:8px}
+.icon-btn,.menu-btn{border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:12px;padding:8px 11px;cursor:pointer}
+.menu-btn{display:none}
+.layout{display:grid;grid-template-columns:var(--sidebar) 1fr;max-width:1500px;margin:auto}
+.sidebar{position:sticky;top:68px;height:calc(100vh - 68px);padding:30px 20px;border-right:1px solid var(--line);overflow:auto}
+.side-title{font-size:12px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);font-weight:800;margin:12px 10px}
+.toc a{display:block;text-decoration:none;padding:10px 12px;border-radius:11px;color:var(--muted);font-size:14px;margin:3px 0}
+.toc a:hover,.toc a.active{background:var(--accent-soft);color:var(--accent);font-weight:750}
+.main{min-width:0}
+.hero{min-height:92vh;padding:150px 8vw 90px;display:flex;align-items:center;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;width:500px;height:500px;border-radius:50%;right:-180px;top:80px;background:var(--accent-soft);opacity:.8;filter:blur(1px)}
+.hero-content{position:relative;z-index:1;max-width:900px}
+.eyebrow{display:inline-flex;gap:8px;align-items:center;color:var(--accent);font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(48px,7vw,92px);line-height:.98;letter-spacing:-.065em;margin:18px 0 26px;max-width:900px}
+.hero p{font-size:clamp(18px,2vw,23px);color:var(--muted);max-width:760px}
+.quote{font-size:18px;font-weight:700;max-width:680px;margin:30px 0;padding:18px 20px;border-left:3px solid var(--accent2);background:var(--surface);border-radius:0 14px 14px 0}
+.btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;border:0;border-radius:13px;padding:13px 18px;background:var(--accent);color:#fff;font-weight:800;cursor:pointer;box-shadow:0 10px 25px rgba(23,63,44,.16)}
+.btn.secondary{background:var(--surface);color:var(--text);border:1px solid var(--line);box-shadow:none}
+section.chapter{padding:90px 8vw;border-top:1px solid var(--line);scroll-margin-top:74px}
+.chapter-head{display:grid;grid-template-columns:120px 1fr;gap:25px;align-items:start;margin-bottom:42px}
+.chapter-no{font-size:14px;font-weight:900;color:var(--accent2);letter-spacing:.1em}
+h2{font-size:clamp(32px,4vw,56px);line-height:1.05;letter-spacing:-.045em;margin:0 0 14px}
+h3{font-size:24px;line-height:1.2;margin:38px 0 12px;letter-spacing:-.02em}
+h4{margin:0 0 8px;font-size:17px}
+.lead{font-size:19px;color:var(--muted);max-width:780px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:24px 0}
+.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:25px;box-shadow:0 8px 25px rgba(0,0,0,.025)}
+.card p:last-child{margin-bottom:0}
+.callout{padding:20px 22px;border-radius:18px;margin:24px 0;border:1px solid var(--line);background:var(--surface)}
+.callout.tip{background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent2) 35%,var(--line))}
+.callout.warn{background:var(--warn-bg);border-color:color-mix(in srgb,var(--warn) 30%,var(--line))}
+.callout.danger{background:var(--danger-bg);border-color:color-mix(in srgb,var(--danger) 30%,var(--line))}
+.label{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.13em;color:var(--muted);display:block;margin-bottom:7px}
+.flow{display:flex;align-items:stretch;gap:0;margin:28px 0;overflow:auto}
+.flow .node{min-width:145px;flex:1;background:var(--surface);border:1px solid var(--line);padding:20px;text-align:center;font-weight:800}
+.flow .arrow{display:flex;align-items:center;padding:0 8px;color:var(--accent2);font-weight:900}
+.piece-visual{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+.piece{background:var(--surface);border:1px solid var(--line);padding:16px;border-radius:13px;text-align:center;font-weight:800}
+.piece.active{background:var(--accent);color:#fff}
+table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;margin:24px 0}
+th,td{text-align:left;padding:15px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--surface2);font-size:13px;text-transform:uppercase;letter-spacing:.06em}
+tr:last-child td{border-bottom:0}
+details{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:15px 18px;margin:10px 0}
+summary{cursor:pointer;font-weight:800}
+.example{border-left:3px solid var(--accent2);padding:2px 0 2px 18px;margin:20px 0}
+.checklist{display:grid;gap:10px;margin:20px 0}
+.check{display:flex;align-items:flex-start;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;cursor:pointer}
+.check input{width:20px;height:20px;accent-color:var(--accent2);margin-top:3px}
+.check.done{opacity:.65;text-decoration:line-through}
+.quiz{background:var(--surface2);border-radius:20px;padding:24px;margin:25px 0}
+.quiz button{border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:11px;padding:10px 14px;margin:5px;cursor:pointer}
+.quiz .result{font-weight:800;margin-top:12px}
+.chapter-nav{display:flex;justify-content:space-between;gap:12px;margin-top:55px;padding-top:28px;border-top:1px solid var(--line)}
+.chapter-nav a{flex:1;text-decoration:none}
+.chapter-nav a:last-child{text-align:right}
+.progress-wrap{margin:25px 0;background:var(--surface2);border-radius:99px;height:10px;overflow:hidden}
+.progress-inner{height:100%;width:0;background:var(--accent2);transition:width .2s}
+.footer{padding:70px 8vw;border-top:1px solid var(--line);color:var(--muted)}
+.small{font-size:14px;color:var(--muted)}
+.sources a{color:var(--accent2)}
+@media(max-width:980px){
+  .layout{display:block}
+  .sidebar{position:fixed;z-index:850;left:-310px;top:68px;width:290px;background:var(--bg);box-shadow:var(--shadow);transition:left .25s;height:calc(100vh - 68px)}
+  .sidebar.open{left:0}
+  .menu-btn{display:block}
+  .hero{padding-left:7vw;padding-right:7vw}
+  section.chapter{padding-left:7vw;padding-right:7vw}
+}
+@media(max-width:700px){
+  .topbar{padding:0 12px}
+  .brand{font-size:14px}
+  .hero{min-height:auto;padding-top:125px;padding-bottom:70px}
+  .grid,.grid.three,.piece-visual{grid-template-columns:1fr}
+  .chapter-head{grid-template-columns:1fr;gap:8px}
+  h1{font-size:54px}
+  section.chapter{padding-top:65px;padding-bottom:65px}
+  .flow{display:grid;gap:8px}
+  .flow .arrow{justify-content:center;transform:rotate(90deg);height:18px}
+  th,td{padding:11px 10px;font-size:14px}
+  .chapter-nav{flex-direction:column}
+  .chapter-nav a:last-child{text-align:left}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="progress" id="readProgress"></div>
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Buka menu">☰</button>
+  <div class="brand">TRADING SAHAM DARI NOL</div>
+  <div class="top-actions">
+    <button class="icon-btn" id="themeBtn" title="Ganti tema">☾</button>
+    <button class="icon-btn" id="resetBtn" title="Reset checklist">↺</button>
+  </div>
+</header>
+
+<div class="layout">
+<aside class="sidebar" id="sidebar">
+  <div class="side-title">Daftar Isi</div>
+  <nav class="toc">
+    <a href="#cover">Cover</a>
+    <a href="#bab1">01 — Kenalan dengan Saham</a>
+    <a href="#bab2">02 — Mengenal Pasar Saham</a>
+    <a href="#bab3">03 — Bagaimana Pasar Bekerja</a>
+    <a href="#bab4">04 — Risiko & Mindset</a>
+    <a href="#bab5">05 — Bahasa Dasar Saham</a>
+    <a href="#bab6">06 — Roadmap Belajar</a>
+    <a href="#bab7">07 — Checklist Sebelum Mulai</a>
+    <a href="#sumber">Sumber & Catatan</a>
+  </nav>
+  <div class="side-title">Progress Bab</div>
+  <div class="progress-wrap"><div class="progress-inner" id="chapterProgress"></div></div>
+  <div class="small" id="progressText">0% checklist selesai</div>
+</aside>
+
+<main class="main">
+<section class="hero" id="cover">
+  <div class="hero-content">
+    <span class="eyebrow">Ebook Interaktif · Fondasi</span>
+    <h1>Trading Saham<br>dari Nol.</h1>
+    <p>Panduan pemula memahami dunia trading saham sebelum terjun ke pasar.</p>
+    <div class="quote">“Jangan buru-buru mencari saham untuk dibeli. Pahami dulu pasar tempat kamu akan bermain.”</div>
+    <a class="btn" href="#bab1">Mulai Belajar →</a>
+    <p class="small" style="margin-top:22px">Tujuan ebook ini bukan membuatmu cepat trading. Tujuannya membuatmu cukup paham untuk tahu apa yang sedang kamu lakukan.</p>
+  </div>
+</section>
+
+<section class="chapter" id="bab1">
+  <div class="chapter-head"><div class="chapter-no">01 / 07</div><div><h2>Kenalan dengan Saham</h2><p class="lead">Sebelum melihat chart, pahami dulu benda yang sebenarnya sedang kamu miliki ketika membeli saham.</p></div></div>
+  <h3>Apa itu saham?</h3>
+  <p><strong>Sederhananya:</strong> saham adalah bukti kepemilikan atas bagian dari sebuah perusahaan. Perusahaan yang menerbitkan saham membagi kepemilikannya menjadi sejumlah unit saham.</p>
+  <div class="example"><strong>Analogi:</strong> bayangkan sebuah perusahaan dibagi menjadi 1.000 bagian kepemilikan. Jika kamu memiliki 10 bagian, secara sederhana kamu memiliki 1% dari perusahaan tersebut.</div>
+  <div class="piece-visual"><div class="piece active">10 saham<br><span class="small" style="color:inherit">bagian milikmu</span></div><div class="piece">990 saham<br><span class="small">bagian pemilik lain</span></div></div>
+  <div class="callout tip"><span class="label">Yang perlu kamu ingat</span><strong>Saham bukan mesin uang.</strong><br>Harga saham bisa naik maupun turun. Keuntungan tidak pernah dijamin.</div>
+
+  <h3>Kenapa perusahaan menerbitkan saham?</h3>
+  <p>Salah satu alasan utamanya adalah memperoleh modal untuk mengembangkan bisnis. Dalam proses penawaran umum perdana (IPO), perusahaan menawarkan saham kepada investor. Setelah saham tercatat dan diperdagangkan di pasar sekunder, transaksi terjadi antarinvestor.</p>
+  <div class="flow">
+    <div class="node">Perusahaan</div><div class="arrow">→</div><div class="node">Saham</div><div class="arrow">→</div><div class="node">Investor</div><div class="arrow">→</div><div class="node">Kepemilikan</div>
+  </div>
+  <h3>Kenapa harga saham berubah?</h3>
+  <p>Harga di pasar bergerak karena pertemuan permintaan dan penawaran. Di balik angka harga ada banyak keputusan manusia dan sistem: orang yang ingin membeli, orang yang ingin menjual, informasi baru, ekspektasi terhadap bisnis, kondisi ekonomi, sentimen, dan likuiditas.</p>
+  <div class="grid">
+    <div class="card"><span class="label">Ketika permintaan kuat</span><h4>Pembeli lebih agresif</h4><p>Jika pembeli bersedia mengambil harga jual yang tersedia, transaksi dapat terjadi pada harga yang lebih tinggi.</p></div>
+    <div class="card"><span class="label">Ketika penawaran kuat</span><h4>Penjual lebih agresif</h4><p>Jika penjual bersedia melepas pada harga beli yang tersedia, transaksi dapat terjadi pada harga yang lebih rendah.</p></div>
+  </div>
+  <div class="callout warn"><span class="label">Jangan salah paham</span>Harga naik <em>bukan</em> berarti perusahaan pasti bagus. Harga turun <em>bukan</em> berarti perusahaan pasti buruk. Untuk memahami alasannya, kamu perlu melihat konteks.</div>
+  <h3>Coba pahami</h3>
+  <div class="quiz" data-answer="b">
+    <strong>Jika sebuah perusahaan memiliki 1.000 saham dan kamu memiliki 10 saham, secara sederhana berapa persentase kepemilikanmu?</strong><br>
+    <button data-choice="a">0,1%</button><button data-choice="b">1%</button><button data-choice="c">10%</button>
+    <div class="result"></div>
+  </div>
+  <h3>Checkpoint Bab 1</h3>
+  <div class="checklist">
+    <label class="check"><input type="checkbox" data-check="b1a"><span>Saya memahami bahwa saham adalah bagian kepemilikan perusahaan.</span></label>
+    <label class="check"><input type="checkbox" data-check="b1b"><span>Saya memahami bahwa harga saham bisa naik maupun turun.</span></label>
+    <label class="check"><input type="checkbox" data-check="b1c"><span>Saya memahami bahwa permintaan dan penawaran ikut membentuk harga pasar.</span></label>
+  </div>
+  <div class="chapter-nav"><span></span><a class="btn" href="#bab2">Bab 2 · Mengenal Pasar Saham →</a></div>
+</section>
+
+<section class="chapter" id="bab2">
+  <div class="chapter-head">
+    <div class="chapter-no">02 / 07</div>
+    <div>
+      <h2>Mengenal Pasar Saham</h2>
+      <p class="lead">Setelah memahami apa yang dimaksud dengan saham, sekarang kita beralih ke tempat dan sistem yang membuat saham tersebut dapat diperdagangkan.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <span class="label">Tujuan Bab</span>
+    Setelah menyelesaikan bab ini, kamu diharapkan memahami apa itu pasar saham, mengapa pasar dibutuhkan, siapa saja yang terlibat, apa peran BEI dan perusahaan sekuritas, apa itu RDN, bagaimana transaksi berlangsung, serta bagaimana bid, offer, lot, supply, dan demand bekerja pada tingkat dasar.
+  </div>
+
+  <div class="callout warn">
+    <span class="label">Fokus BAB 2</span>
+    Bab ini membahas <strong>sistem dan mekanisme pasar</strong>. Kita belum masuk ke strategi trading, indikator teknikal, mencari saham, entry, take profit, cut loss, atau cara membaca order book secara mendalam.
+  </div>
+
+  <h3>2.1 Setelah Mengenal Saham, Sekarang Kenali Pasarnya</h3>
+  <p>Mengetahui apa itu saham belum berarti kita memahami bagaimana saham diperdagangkan.</p>
+  <p>Bayangkan sebuah barang yang ingin dibeli dan dijual. Barang tersebut membutuhkan sebuah sistem yang mempertemukan orang yang ingin membeli dengan orang yang ingin menjual. Dalam dunia saham, sistem tersebut adalah pasar saham.</p>
+
+  <div class="callout">
+    <span class="label">💡 Sederhananya</span>
+    Kalau saham adalah <strong>“barang” yang diperdagangkan</strong>, maka pasar saham adalah <strong>sistem yang mempertemukan pihak yang ingin membeli dan menjualnya</strong>.
+  </div>
+
+  <div class="flow">
+    <div class="node">SAHAM</div>
+    <div class="arrow">→</div>
+    <div class="node">PASAR</div>
+    <div class="arrow">→</div>
+    <div class="node">PELAKU</div>
+    <div class="arrow">→</div>
+    <div class="node">ORDER</div>
+    <div class="arrow">→</div>
+    <div class="node">TRANSAKSI</div>
+    <div class="arrow">→</div>
+    <div class="node">HARGA</div>
+  </div>
+
+  <div class="example">
+    <strong>Analogi sederhana:</strong> bayangkan pasar tradisional. Ada penjual, ada pembeli, ada aturan, dan ada mekanisme agar barang bisa ditawarkan serta dibeli. Pasar saham memiliki konsep yang serupa, tetapi seluruh prosesnya berlangsung melalui sistem perdagangan yang terorganisasi.
+  </div>
+
+  <h3>2.2 Apa Itu Pasar Saham?</h3>
+  <p>Pasar saham adalah bagian dari pasar modal yang memungkinkan saham diperdagangkan melalui mekanisme yang telah diatur.</p>
+  <p>Pasar dibutuhkan karena ada pihak yang ingin menjual dan ada pihak yang ingin membeli. Tanpa mekanisme yang mempertemukan keduanya, proses perdagangan akan jauh lebih sulit dilakukan secara teratur.</p>
+
+  <div class="grid three">
+    <div class="card">
+      <span class="label">Untuk Perusahaan</span>
+      <h4>Akses terhadap modal</h4>
+      <p>Pasar modal memberi perusahaan jalur untuk memperoleh pendanaan dari masyarakat melalui mekanisme pasar modal.</p>
+    </div>
+    <div class="card">
+      <span class="label">Untuk Investor</span>
+      <h4>Akses untuk bertransaksi</h4>
+      <p>Investor memiliki sarana untuk membeli dan menjual saham yang diperdagangkan di pasar.</p>
+    </div>
+    <div class="card">
+      <span class="label">Untuk Pasar</span>
+      <h4>Pertemuan pembeli & penjual</h4>
+      <p>Pasar menyediakan mekanisme agar order dari berbagai pelaku dapat dipertemukan sesuai aturan perdagangan.</p>
+    </div>
+  </div>
+
+  <h4>Contoh Sederhana</h4>
+  <div class="example">
+    Bayangkan ada saham ABC. Andi ingin menjual, sedangkan Budi ingin membeli. Keduanya tidak perlu mencari satu sama lain secara langsung. Mereka menggunakan sistem perdagangan melalui perantara yang tersedia, sehingga order dapat masuk ke pasar dan dipertemukan sesuai mekanisme yang berlaku.
+  </div>
+
+  <div class="callout">
+    <span class="label">Coba pahami</span>
+    Inti dari pasar adalah <strong>mempertemukan pembeli dan penjual</strong>. Dari proses pertemuan itulah transaksi terjadi dan informasi harga terbentuk.
+  </div>
+
+  <h3>2.3 Siapa Saja yang Ada di Pasar Saham?</h3>
+  <p>Pasar saham terdiri dari beberapa pihak dengan tugas yang berbeda. Memahami siapa mereka akan membuat alur pasar jauh lebih mudah dipahami.</p>
+
+  <div class="flow">
+    <div class="node">EMITEN</div>
+    <div class="arrow">↔</div>
+    <div class="node">PASAR</div>
+    <div class="arrow">↔</div>
+    <div class="node">INVESTOR / TRADER</div>
+  </div>
+
+  <p><strong>Sekuritas</strong> menjadi perantara akses transaksi bagi nasabah. <strong>Bursa</strong> menyediakan dan mengoperasikan sarana perdagangan, sedangkan <strong>regulator</strong> menjalankan fungsi pengaturan dan pengawasan sesuai kewenangannya.</p>
+
+  <div class="grid three">
+    <div class="card">
+      <span class="label">01 · Emiten</span>
+      <h4>Berada di sisi perusahaan</h4>
+      <p>Dalam konteks pasar, emiten adalah pihak perusahaan yang efeknya ditawarkan atau tercatat di pasar modal. Perannya berkaitan dengan kegiatan perusahaan dan kewajiban penyampaian informasi kepada pasar.</p>
+    </div>
+    <div class="card">
+      <span class="label">02 · Investor</span>
+      <h4>Melakukan transaksi</h4>
+      <p>Investor dapat membeli atau menjual saham sesuai tujuan dan keputusan investasinya. Fokus waktunya dapat berbeda-beda antara satu investor dan lainnya.</p>
+    </div>
+    <div class="card">
+      <span class="label">03 · Trader</span>
+      <h4>Aktif jual-beli</h4>
+      <p>Trader merupakan pelaku pasar yang lebih aktif melakukan jual-beli untuk memanfaatkan pergerakan harga dalam jangka waktu yang relatif lebih pendek.</p>
+    </div>
+    <div class="card">
+      <span class="label">04 · Sekuritas</span>
+      <h4>Perantara akses</h4>
+      <p>Perusahaan sekuritas membantu nasabah mengakses perdagangan efek dan menjadi bagian penting dalam proses penyampaian order.</p>
+    </div>
+    <div class="card">
+      <span class="label">05 · Bursa</span>
+      <h4>Menyediakan sarana perdagangan</h4>
+      <p>Bursa menyediakan dan mengoperasikan sistem serta aturan perdagangan agar kegiatan perdagangan efek dapat berlangsung secara teratur.</p>
+    </div>
+    <div class="card">
+      <span class="label">06 · Regulator</span>
+      <h4>Mengatur & mengawasi</h4>
+      <p>Regulator menjalankan fungsi pengaturan dan pengawasan pasar agar kegiatan pasar modal berlangsung sesuai ketentuan dan memiliki perlindungan yang diperlukan.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <span class="label">Jangan salah paham</span>
+    Setiap pihak memiliki fungsi berbeda. <strong>Sekuritas bukan bursa, aplikasi trading bukan bursa, dan trader bukan bursa.</strong>
+  </div>
+
+  <h3>2.4 Mengenal Bursa Efek Indonesia (BEI)</h3>
+  <p><strong>Bursa Efek Indonesia (BEI)</strong> adalah lembaga yang menyediakan dan mengoperasikan sarana perdagangan efek di Indonesia. Dalam kehidupan sehari-hari, BEI sering disebut ketika orang membicarakan perdagangan saham di Indonesia.</p>
+
+  <p>Yang penting untuk pemula bukan menghafal sejarahnya, melainkan memahami posisinya dalam sistem pasar.</p>
+
+  <div class="grid">
+    <div class="card">
+      <span class="label">Fungsi</span>
+      <h4>Menyediakan sarana perdagangan</h4>
+      <p>BEI mengoperasikan sarana perdagangan sehingga order dapat diproses melalui sistem dan aturan yang berlaku.</p>
+    </div>
+    <div class="card">
+      <span class="label">Mengapa penting?</span>
+      <h4>Membuat perdagangan terorganisasi</h4>
+      <p>Perdagangan membutuhkan sistem, aturan, dan mekanisme yang jelas agar kegiatan pasar dapat berlangsung secara teratur.</p>
+    </div>
+  </div>
+
+  <h4>BEI bukan aplikasi trading</h4>
+  <p>Ketika kamu membuka aplikasi di HP dan melihat tombol <strong>BUY</strong> atau <strong>SELL</strong>, aplikasi tersebut biasanya disediakan oleh perusahaan sekuritas. Kamu menggunakan aplikasi itu untuk melihat informasi pasar dan menyampaikan order.</p>
+
+  <h4>BEI juga bukan perusahaan sekuritas</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>Pihak</th>
+        <th>Peran sederhana</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>BEI</strong></td>
+        <td>Menyediakan dan mengoperasikan sarana perdagangan efek di bursa.</td>
+      </tr>
+      <tr>
+        <td><strong>Sekuritas</strong></td>
+        <td>Membantu nasabah mengakses perdagangan dan menyampaikan order.</td>
+      </tr>
+      <tr>
+        <td><strong>Aplikasi trading</strong></td>
+        <td>Sarana yang digunakan nasabah untuk melihat informasi dan memasukkan instruksi transaksi.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="example">
+    <strong>Analogi:</strong> kalau BEI adalah bagian dari <strong>infrastruktur pasar</strong>, maka aplikasi sekuritas adalah salah satu <strong>pintu akses</strong> yang digunakan nasabah untuk masuk ke sistem perdagangan.
+  </div>
+
+  <div class="callout warn">
+    <span class="label">Ingat</span>
+    <strong>BEI ≠ aplikasi trading</strong><br>
+    <strong>BEI ≠ perusahaan sekuritas</strong>
+  </div>
+
+  <h3>2.5 Mengenal Perusahaan Sekuritas</h3>
+  <p>Setelah tahu bahwa bursa menyediakan sarana perdagangan, pertanyaan berikutnya adalah: <strong>bagaimana seorang investor atau trader mengakses pasar tersebut?</strong></p>
+
+  <p>Salah satu pihak penting dalam proses tersebut adalah <strong>perusahaan sekuritas</strong>. Secara sederhana, perusahaan sekuritas membantu nasabah mengakses perdagangan efek dan menyampaikan order ke sistem perdagangan sesuai mekanisme yang berlaku.</p>
+
+  <div class="flow vertical-mobile">
+    <div class="node">KAMU</div>
+    <div class="arrow">↓</div>
+    <div class="node">APLIKASI SEKURITAS</div>
+    <div class="arrow">↓</div>
+    <div class="node">SISTEM PERDAGANGAN</div>
+    <div class="arrow">↓</div>
+    <div class="node">PASAR</div>
+  </div>
+
+  <h4>Jadi, apa fungsi aplikasi trading?</h4>
+  <p>Aplikasi trading adalah alat yang digunakan nasabah untuk mengakses layanan sekuritas. Dari aplikasi, kamu dapat melihat informasi seperti harga, bid, offer, dan memasukkan instruksi beli atau jual.</p>
+
+  <p>Di belakang tampilan aplikasi tersebut terdapat sistem dan proses yang jauh lebih besar. Jadi, ketika kamu menekan tombol BUY, sebenarnya kamu sedang <strong>mengirimkan sebuah order</strong> melalui sistem yang disediakan oleh sekuritas.</p>
+
+  <div class="callout">
+    <span class="label">Coba pahami</span>
+    Kamu tidak “membeli dari aplikasi”. Aplikasi adalah <strong>alat untuk mengirimkan instruksi</strong> ke sistem perdagangan melalui perusahaan sekuritas.
+  </div>
+
+  <h3>2.6 Apa Itu RDN?</h3>
+  <p><strong>RDN</strong> adalah singkatan dari <strong>Rekening Dana Nasabah</strong>. Untuk pemula, cukup pahami bahwa RDN digunakan sebagai rekening dana nasabah yang berkaitan dengan transaksi di pasar modal.</p>
+
+  <div class="grid">
+    <div class="card">
+      <span class="label">Rekening pribadi</span>
+      <h4>Untuk kebutuhan perbankan sehari-hari</h4>
+      <p>Misalnya menerima uang, membayar kebutuhan, menabung, dan aktivitas perbankan lainnya.</p>
+    </div>
+    <div class="card">
+      <span class="label">RDN</span>
+      <h4>Terkait aktivitas pasar modal</h4>
+      <p>Digunakan untuk menampung dan menyelesaikan dana yang berkaitan dengan transaksi pasar modal nasabah.</p>
+    </div>
+  </div>
+
+  <p>Gambaran sederhananya:</p>
+
+  <div class="grid three">
+    <div class="card">
+      <span class="label">1</span>
+      <h4>Dana disiapkan</h4>
+      <p>Nasabah menempatkan dana melalui mekanisme yang disediakan untuk kebutuhan transaksi.</p>
+    </div>
+    <div class="card">
+      <span class="label">2</span>
+      <h4>Order dikirim</h4>
+      <p>Nasabah menggunakan aplikasi sekuritas untuk memasukkan instruksi beli atau jual.</p>
+    </div>
+    <div class="card">
+      <span class="label">3</span>
+      <h4>Transaksi diselesaikan</h4>
+      <p>Jika order terjadi, dana dan efek kemudian melalui proses penyelesaian sesuai ketentuan yang berlaku.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <span class="label">💡 Sederhananya</span>
+    Jangan dibayangkan RDN sebagai “dompet biasa”. Untuk tahap ini, cukup ingat bahwa <strong>RDN adalah rekening dana yang digunakan dalam mekanisme transaksi pasar modal nasabah</strong>.
+  </div>
+
+  <h3>2.7 Bagaimana Transaksi Saham Terjadi?</h3>
+  <p>Sekarang kita masuk ke inti dari mekanisme pasar: <strong>bagaimana pembeli dan penjual bisa bertemu?</strong></p>
+
+  <div class="example">
+    <strong>Simulasi:</strong><br><br>
+    Andi ingin menjual saham ABC di harga <strong>Rp1.000 per lembar</strong>.<br>
+    Budi ingin membeli saham ABC di harga <strong>Rp1.000 per lembar</strong>.
+  </div>
+
+  <div class="flow">
+    <div class="node">BUYER<br><span class="small">Budi</span></div>
+    <div class="arrow">+</div>
+    <div class="node">SELLER<br><span class="small">Andi</span></div>
+    <div class="arrow">→</div>
+    <div class="node"><strong>ORDER BERTEMU</strong></div>
+    <div class="arrow">→</div>
+    <div class="node"><strong>TRANSAKSI</strong></div>
+  </div>
+
+  <p>Dalam bahasa sederhana, ketika order beli dan order jual memenuhi kondisi untuk dipertemukan menurut aturan perdagangan, terjadilah transaksi.</p>
+
+  <div class="grid three">
+    <div class="card">
+      <span class="label">Pembeli</span>
+      <h4>Budi</h4>
+      <p>Mengajukan order untuk membeli saham ABC pada harga yang diinginkan.</p>
+    </div>
+    <div class="card">
+      <span class="label">Penjual</span>
+      <h4>Andi</h4>
+      <p>Mengajukan order untuk menjual saham ABC pada harga yang diinginkan.</p>
+    </div>
+    <div class="card">
+      <span class="label">Matching</span>
+      <h4>Order bertemu</h4>
+      <p>Ketika kondisi order sesuai, sistem perdagangan mencatat terjadinya transaksi.</p>
+    </div>
+  </div>
+
+  <p>Setelah transaksi terjadi, proses belum berarti selesai secara administrasi. Ada proses penyelesaian transaksi sesuai ketentuan pasar. Untuk tahap BAB 2, kamu tidak perlu menghafal detail teknis penyelesaian tersebut.</p>
+
+  <div class="callout">
+    <span class="label">Rumus paling sederhana</span>
+    <strong>BUYER + SELLER → ORDER BERTEMU → TRANSAKSI TERJADI</strong>
+  </div>
+
+  <div class="callout warn">
+    <span class="label">Belum perlu dipelajari sekarang</span>
+    Kita belum membahas strategi membaca order book, broker summary, pola bandar, atau cara mencari titik entry. Itu adalah materi yang berbeda dari memahami mekanisme transaksi.
+  </div>
+
+  <h3>2.8 Mengenal Bid dan Offer</h3>
+  <p>Ketika membuka aplikasi saham, kamu akan sering melihat dua sisi harga: <strong>bid</strong> dan <strong>offer</strong>.</p>
+
+  <div class="grid">
+    <div class="card">
+      <span class="label">BID</span>
+      <h4>Antrean harga beli</h4>
+      <p>Bid menunjukkan harga yang diajukan oleh pihak yang ingin membeli saham.</p>
+    </div>
+    <div class="card">
+      <span class="label">OFFER</span>
+      <h4>Antrean harga jual</h4>
+      <p>Offer menunjukkan harga yang ditawarkan oleh pihak yang ingin menjual saham.</p>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>BID</th>
+        <th>OFFER</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Rp990</td><td>Rp1.000</td></tr>
+      <tr><td>Rp980</td><td>Rp1.010</td></tr>
+      <tr><td>Rp970</td><td>Rp1.020</td></tr>
+    </tbody>
+  </table>
+
+  <p>Bagaimana membacanya?</p>
+  <ul>
+    <li><strong>Bid Rp990</strong> berarti ada pihak yang mengajukan harga beli Rp990.</li>
+    <li><strong>Offer Rp1.000</strong> berarti ada pihak yang menawarkan harga jual Rp1.000.</li>
+    <li>Angka di bawahnya menunjukkan antrean harga lainnya.</li>
+  </ul>
+
+  <div class="example">
+    <strong>Bayangkan seperti dua antrean:</strong><br><br>
+    Sisi <strong>bid</strong>: “Saya mau membeli di harga Rp990.”<br>
+    Sisi <strong>offer</strong>: “Saya mau menjual di harga Rp1.000.”<br><br>
+    Jika ada kondisi yang membuat order beli dan jual bertemu sesuai aturan perdagangan, transaksi dapat terjadi.
+  </div>
+
+  <div class="callout">
+    <span class="label">💡 Sederhananya</span>
+    <strong>BID = antrean pembeli.</strong><br>
+    <strong>OFFER = antrean penjual.</strong>
+  </div>
+
+  <div class="callout warn">
+    <span class="label">Batas materi</span>
+    Jangan dulu mencoba mencari “sinyal” dari susunan bid-offer. Pada tahap ini tujuanmu hanya memahami siapa berada di sisi beli, siapa di sisi jual, dan bagaimana order dapat bertemu.
+  </div>
+
+  <h3>2.9 Mengenal Lot dan Lembar Saham</h3>
+  <p>Dalam perdagangan saham di Indonesia, kamu akan sering melihat jumlah saham dinyatakan dalam <strong>lot</strong>. Sementara satu unit saham disebut <strong>lembar</strong>.</p>
+
+  <div class="callout">
+    <span class="label">Aturan dasar</span>
+    <strong>1 lot = 100 lembar saham.</strong>
+  </div>
+
+  <div class="example">
+    <strong>Contoh:</strong><br>
+    Harga saham = <strong>Rp1.000 per lembar</strong><br>
+    1 lot = <strong>100 lembar</strong><br><br>
+    Nilai 1 lot secara sederhana:<br>
+    <strong>Rp1.000 × 100 = Rp100.000</strong>
+  </div>
+
+  <div class="grid three">
+    <div class="card">
+      <span class="label">1 lembar</span>
+      <h4>Satu unit</h4>
+      <p>Jika harganya Rp1.000, maka 1 lembar bernilai Rp1.000 secara sederhana.</p>
+    </div>
+    <div class="card">
+      <span class="label">1 lot</span>
+      <h4>100 lembar</h4>
+      <p>Jika harganya Rp1.000 per lembar, 1 lot bernilai Rp100.000 secara sederhana.</p>
+    </div>
+    <div class="card">
+      <span class="label">5 lot</span>
+      <h4>500 lembar</h4>
+      <p>Jika harganya Rp1.000 per lembar, 5 lot bernilai Rp500.000 secara sederhana.</p>
+    </div>
+  </div>
+
+  <h4>Contoh dengan harga berbeda</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>Harga per lembar</th>
+        <th>Jumlah</th>
+        <th>Jumlah lembar</th>
+        <th>Nilai sederhana</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Rp500</td><td>1 lot</td><td>100</td><td>Rp50.000</td></tr>
+      <tr><td>Rp2.000</td><td>1 lot</td><td>100</td><td>Rp200.000</td></tr>
+      <tr><td>Rp5.000</td><td>3 lot</td><td>300</td><td>Rp1.500.000</td></tr>
+    </tbody>
+  </table>
+
+  <p>Perhatikan bahwa <strong>harga per lembar</strong> berbeda dengan <strong>jumlah lot</strong>. Jumlah lot menentukan berapa banyak lembar yang diperdagangkan.</p>
+
+  <div class="callout">
+    <span class="label">Rumus sederhana</span>
+    <strong>Nilai transaksi ≈ harga per lembar × jumlah lembar</strong><br>
+    dan<br>
+    <strong>jumlah lembar = jumlah lot × 100</strong>
+  </div>
+
+  <p>Perhitungan di atas adalah nilai sederhana sebelum memperhitungkan biaya transaksi atau ketentuan lainnya.</p>
+
+  <h3>2.10 Bagaimana Harga Saham Bisa Bergerak?</h3>
+  <p>Setelah memahami order beli dan order jual, kita bisa mulai memahami mengapa harga bergerak.</p>
+
+  <div class="callout">
+    <span class="label">Konsep dasar</span>
+    <strong>SUPPLY &amp; DEMAND</strong>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <span class="label">PEMBELI</span>
+      <h4>Demand / Permintaan</h4>
+      <p>Pihak yang ingin membeli menciptakan permintaan terhadap saham pada harga tertentu.</p>
+    </div>
+    <div class="card">
+      <span class="label">PENJUAL</span>
+      <h4>Supply / Penawaran</h4>
+      <p>Pihak yang ingin menjual menciptakan penawaran saham pada harga tertentu.</p>
+    </div>
+  </div>
+
+  <div class="flow">
+    <div class="node">PEMBELI</div>
+    <div class="arrow">↓</div>
+    <div class="node">PERMINTAAN</div>
+    <div class="arrow">↔</div>
+    <div class="node">PENAWARAN</div>
+    <div class="arrow">↑</div>
+    <div class="node">PENJUAL</div>
+  </div>
+
+  <div class="flow">
+    <div class="node">PERMINTAAN + PENAWARAN</div>
+    <div class="arrow">↓</div>
+    <div class="node">TRANSAKSI</div>
+    <div class="arrow">↓</div>
+    <div class="node">PEMBENTUKAN HARGA</div>
+  </div>
+
+  <p>Secara sederhana, ketika tekanan permintaan lebih besar, harga <strong>cenderung terdorong naik</strong>. Ketika tekanan penawaran atau penjualan lebih besar, harga <strong>cenderung terdorong turun</strong>.</p>
+
+  <div class="callout warn">
+    <span class="label">Penting</span>
+    Kata yang perlu diperhatikan adalah <strong>“cenderung”</strong>. Pergerakan harga tidak ditentukan oleh satu rumus sederhana saja. Pasar terdiri dari banyak pelaku dengan informasi, ekspektasi, dan keputusan yang berbeda.
+  </div>
+
+  <h3>2.11 Apa yang Membuat Orang Mau Membeli atau Menjual?</h3>
+  <p>Kalau begitu, kenapa ada orang yang membeli sementara orang lain justru menjual saham yang sama?</p>
+
+  <p>Karena setiap pelaku pasar dapat memiliki informasi, tujuan, waktu, ekspektasi, dan penilaian yang berbeda.</p>
+
+  <div class="grid three">
+    <div class="card"><h4>Kinerja perusahaan</h4><p>Perubahan kinerja dapat mengubah pandangan pelaku pasar.</p></div>
+    <div class="card"><h4>Laporan keuangan</h4><p>Informasi keuangan dapat membuat ekspektasi terhadap perusahaan berubah.</p></div>
+    <div class="card"><h4>Berita</h4><p>Berita perusahaan atau industri dapat memengaruhi keputusan pelaku pasar.</p></div>
+    <div class="card"><h4>Kondisi ekonomi</h4><p>Situasi ekonomi dapat memengaruhi minat terhadap berbagai aset dan sektor.</p></div>
+    <div class="card"><h4>Kondisi sektor</h4><p>Perubahan pada industri tertentu dapat memengaruhi minat terhadap saham di dalamnya.</p></div>
+    <div class="card"><h4>Ekspektasi</h4><p>Pelaku pasar bisa mengambil keputusan berdasarkan apa yang mereka perkirakan akan terjadi.</p></div>
+    <div class="card"><h4>Sentimen pasar</h4><p>Suasana optimistis atau pesimistis dapat memengaruhi permintaan dan penawaran.</p></div>
+    <div class="card"><h4>Psikologi</h4><p>Rasa takut, percaya diri, panik, atau terlalu optimistis dapat memengaruhi keputusan.</p></div>
+    <div class="card"><h4>Pergerakan harga</h4><p>Perubahan harga itu sendiri dapat menjadi salah satu informasi yang diperhatikan pelaku pasar.</p></div>
+  </div>
+
+  <div class="example">
+    <strong>Contoh sederhana:</strong> perusahaan ABC mengumumkan informasi yang dianggap positif oleh sebagian pelaku pasar. Mereka menjadi lebih optimistis dan ingin membeli. Sementara pelaku lain mungkin sudah membeli sebelumnya, memiliki penilaian berbeda, atau justru memilih menjual. Perbedaan keputusan inilah yang membuat pasar terus memiliki sisi pembeli dan penjual.
+  </div>
+
+  <div class="callout">
+    <span class="label">Alur yang perlu diingat</span>
+    <strong>INFORMASI → PERSEPSI → PERMINTAAN / PENAWARAN → TRANSAKSI → PERGERAKAN HARGA</strong>
+  </div>
+
+  <p>Alur tersebut bukan berarti setiap informasi pasti langsung mengubah harga. Informasi harus diproses oleh pelaku pasar, dibandingkan dengan ekspektasi mereka, lalu tercermin dalam keputusan beli atau jual.</p>
+
+  <h3>2.12 Kesimpulan: Dari Saham ke Pasar</h3>
+  <p>Sampai di sini, perjalanan kita mulai berubah dari <strong>“apa yang saya beli?”</strong> menjadi <strong>“di mana dan bagaimana saya memperdagangkannya?”</strong></p>
+
+  <div class="grid three">
+    <div class="card">
+      <span class="label">BAB 1 · OBJECT</span>
+      <h4>Apa yang saya pelajari?</h4>
+      <p><strong>Saham.</strong> Kita mengenal konsep dasar instrumen yang diperdagangkan.</p>
+    </div>
+    <div class="card">
+      <span class="label">BAB 2 · SYSTEM</span>
+      <h4>Di mana & bagaimana?</h4>
+      <p><strong>Pasar.</strong> Kita memahami sistem, pelaku, perantara, order, transaksi, dan pembentukan harga.</p>
+    </div>
+    <div class="card">
+      <span class="label">BERIKUTNYA</span>
+      <h4>Ke mana perjalanan belajar?</h4>
+      <p>Kita akan melanjutkan perjalanan dengan memahami bagian berikutnya dari dunia trading saham sesuai struktur ebook.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <span class="label">Inti BAB 2</span>
+    <strong>Saham → Pasar → Pelaku → Perantara → Order → Transaksi → Harga.</strong><br><br>
+    Kalau alur ini sudah masuk akal di kepalamu, fondasi mekanisme pasar mulai terbentuk.
+  </div>
+
+  <h3>CHECKPOINT BAB 2</h3>
+  <p>Centang hanya jika kamu benar-benar memahami pernyataannya.</p>
+
+  <div class="checklist">
+    <label class="check"><input type="checkbox" data-check="b2a"><span>Saya memahami apa itu pasar saham.</span></label>
+    <label class="check"><input type="checkbox" data-check="b2b"><span>Saya memahami fungsi BEI.</span></label>
+    <label class="check"><input type="checkbox" data-check="b2c"><span>Saya memahami peran perusahaan sekuritas.</span></label>
+    <label class="check"><input type="checkbox" data-check="b2d"><span>Saya memahami fungsi RDN.</span></label>
+    <label class="check"><input type="checkbox" data-check="b2e"><span>Saya memahami siapa pembeli dan penjual.</span></label>
+    <label class="check"><input type="checkbox" data-check="b2f"><span>Saya memahami bid dan offer.</span></label>
+    <label class="check"><input type="checkbox" data-check="b2g"><span>Saya memahami lot dan lembar saham.</span></label>
+    <label class="check"><input type="checkbox" data-check="b2h"><span>Saya memahami bagaimana transaksi terjadi.</span></label>
+    <label class="check"><input type="checkbox" data-check="b2i"><span>Saya memahami konsep supply dan demand.</span></label>
+    <label class="check"><input type="checkbox" data-check="b2j"><span>Saya memahami bahwa harga terbentuk melalui interaksi pelaku pasar.</span></label>
+  </div>
+
+  <div class="callout">
+    <span class="label">Pertanyaan refleksi</span>
+    <strong>“Jika seseorang bertanya kepada saya bagaimana sebuah saham bisa berpindah dari penjual kepada pembeli, apakah saya sudah bisa menjelaskannya dengan bahasa sederhana?”</strong>
+  </div>
+
+  <div class="callout warn">
+    <span class="label">Jika belum yakin</span>
+    Tidak masalah. Ulangi bagian yang belum dipahami sebelum lanjut ke bab berikutnya. Tujuan ebook ini bukan membuatmu cepat-cepat melakukan transaksi, tetapi membuatmu memahami apa yang sedang kamu lakukan.
+  </div>
+
+  <div class="quiz" data-answer="b">
+    <strong>Jika harga saham ABC adalah Rp1.000 per lembar, berapa nilai 1 lot secara sederhana?</strong><br>
+    <button data-choice="a">Rp10.000</button>
+    <button data-choice="b">Rp100.000</button>
+    <button data-choice="c">Rp1.000.000</button>
+    <div class="result"></div>
+  </div>
+
+  <div class="chapter-nav">
+    <a class="btn secondary" href="#bab1">← Bab Sebelumnya</a>
+    <a class="btn" href="#bab3">Bab Berikutnya →</a>
+  </div>
+</section>
+
+<section class="chapter" id="bab3">
+  <div class="chapter-head"><div class="chapter-no">03 / 07</div><div><h2>Bagaimana Pasar Saham Bekerja?</h2><p class="lead">Sekarang kita kenalan dengan “jalan” yang dilalui sebuah order sampai menjadi transaksi.</p></div></div>
+  <h3>Siapa saja yang terlibat?</h3>
+  <div class="grid three">
+    <div class="card"><h4>Bursa Efek Indonesia</h4><p>Tempat terselenggaranya perdagangan efek di pasar modal Indonesia dan bagian dari ekosistem pasar modal.</p></div>
+    <div class="card"><h4>Perusahaan Sekuritas</h4><p>Perantara yang menyediakan layanan rekening efek dan fasilitas untuk memasukkan order ke pasar.</p></div>
+    <div class="card"><h4>RDN</h4><p>Rekening Dana Nasabah yang digunakan untuk dana nasabah terkait transaksi pasar modal.</p></div>
+  </div>
+  <div class="flow"><div class="node">Trader</div><div class="arrow">→</div><div class="node">Sekuritas</div><div class="arrow">→</div><div class="node">Pasar</div><div class="arrow">→</div><div class="node">Buyer / Seller</div><div class="arrow">→</div><div class="node">Transaksi</div></div>
+  <h3>Bid dan Offer</h3>
+  <p>Bayangkan sebuah pasar. <strong>Bid</strong> adalah harga yang sedang ditawarkan pembeli. <strong>Offer</strong> (atau ask) adalah harga yang diminta penjual.</p>
+  <div class="grid">
+    <div class="card"><span class="label">Bid</span><h4>“Saya mau membeli di harga ini.”</h4><p>Daftar minat beli pada harga tertentu.</p></div>
+    <div class="card"><span class="label">Offer</span><h4>“Saya mau menjual di harga ini.”</h4><p>Daftar minat jual pada harga tertentu.</p></div>
+  </div>
+  <p>Ketika order beli dan jual bertemu sesuai mekanisme perdagangan, terjadilah transaksi. Jadi, angka harga di layar bukan angka yang muncul begitu saja—ia adalah hasil interaksi order di pasar.</p>
+  <h3>Lot dan lembar</h3>
+  <p>Di pasar saham Indonesia, ukuran transaksi saham menggunakan lot. Secara umum, <strong>1 lot = 100 lembar saham</strong>. Nilai dana yang dibutuhkan tetap bergantung pada harga saham dan biaya transaksi yang berlaku.</p>
+  <div class="callout tip"><span class="label">Cara berpikir yang benar</span>Jangan hanya bertanya, “Harga sahamnya berapa?” Biasakan bertanya juga, “Berapa lembar, berapa lot, berapa nilai transaksinya, dan apa risikonya?”</div>
+  <h3>Supply & demand</h3>
+  <p>Jika banyak pihak ingin membeli dan relatif sedikit pihak yang mau menjual pada harga tertentu, tekanan permintaan bisa mendorong harga. Sebaliknya, tekanan penawaran dapat mendorong harga turun. Dalam praktiknya, pergerakan harga dipengaruhi banyak faktor dan tidak bisa dijelaskan oleh satu variabel saja.</p>
+  <h3>Checkpoint Bab 3</h3>
+  <div class="checklist">
+    <label class="check"><input type="checkbox" data-check="b3a"><span>Saya memahami fungsi sekuritas dalam proses transaksi.</span></label>
+    <label class="check"><input type="checkbox" data-check="b3b"><span>Saya memahami perbedaan bid dan offer.</span></label>
+    <label class="check"><input type="checkbox" data-check="b3c"><span>Saya tahu bahwa 1 lot saham umumnya berisi 100 lembar.</span></label>
+  </div>
+  <div class="chapter-nav"><a class="btn secondary" href="#bab2">← Bab 2 · Mengenal Pasar Saham</a><a class="btn" href="#bab4">Bab 4 · Risiko & Mindset →</a></div>
+</section>
+
+<section class="chapter" id="bab4">
+  <div class="chapter-head"><div class="chapter-no">04 / 07</div><div><h2>Risiko & Mindset Trader</h2><p class="lead">Chart tidak punya emosi. Manusia yang melihat chart-lah yang sering membawa emosi ke dalam keputusan.</p></div></div>
+  <div class="grid">
+    <div class="card"><span class="label">FOMO</span><h4>Takut ketinggalan</h4><p>Melihat harga naik lalu merasa harus ikut sekarang juga. Masalahnya: keputusan dibuat karena tekanan sosial/emosional, bukan rencana.</p></div>
+    <div class="card"><span class="label">Revenge Trading</span><h4>Ingin membalas kerugian</h4><p>Setelah rugi, seseorang menaikkan agresivitas transaksi untuk “mengembalikan” uang dengan cepat.</p></div>
+    <div class="card"><span class="label">Overtrading</span><h4>Terlalu sering transaksi</h4><p>Merasa harus selalu melakukan sesuatu meski tidak ada peluang yang sesuai rencana.</p></div>
+    <div class="card"><span class="label">Greed</span><h4>Terlalu mengejar</h4><p>Keuntungan yang sudah baik dianggap belum cukup, sehingga risiko terus ditambah tanpa alasan yang kuat.</p></div>
+    <div class="card"><span class="label">Fear</span><h4>Takut mengambil keputusan</h4><p>Keraguan berlebihan atau keluar terlalu cepat karena tidak siap menghadapi ketidakpastian.</p></div>
+    <div class="card"><span class="label">Tidak Mau Cut Loss</span><h4>Menolak mengakui salah</h4><p>Mempertahankan posisi hanya karena tidak mau merealisasikan kerugian, walaupun alasan awal sudah tidak berlaku.</p></div>
+  </div>
+  <div class="callout tip"><span class="label">Prinsip inti</span><strong>Trader tidak harus benar dalam setiap transaksi.</strong><br>Yang lebih penting adalah membuat keputusan yang masuk akal, mengukur risiko, dan menjaga agar satu kesalahan tidak menghancurkan kemampuanmu untuk belajar lagi.</div>
+  <h3>Bedakan “rugi” dan “salah”</h3>
+  <p>Transaksi yang rugi belum tentu merupakan keputusan yang buruk. Sebaliknya, transaksi yang untung belum tentu merupakan keputusan yang baik. Kamu bisa membuat keputusan masuk akal lalu hasilnya tetap rugi karena pasar tidak bisa dikendalikan.</p>
+  <div class="example"><strong>Contoh:</strong> kamu punya alasan yang jelas, ukuran posisi terkendali, dan aturan keluar sudah ditentukan. Ternyata harga bergerak berlawanan. Hasilnya rugi. Itu berbeda dengan membeli karena FOMO tanpa rencana lalu berharap harga “pasti balik”.</div>
+  <h3>Latihan singkat</h3>
+  <div class="quiz"><strong>Bayangkan saham yang kamu incar naik 12% dalam sehari tanpa kamu punya rencana. Apa respons paling sehat?</strong><br>
+    <button data-choice="a">Langsung beli karena takut ketinggalan.</button>
+    <button data-choice="b">Berhenti sejenak dan kembali ke rencana serta alasan keputusan.</button>
+    <button data-choice="c">Pinjam uang agar bisa masuk lebih besar.</button>
+    <div class="result"></div>
+  </div>
+  <h3>Checkpoint Bab 4</h3>
+  <div class="checklist">
+    <label class="check"><input type="checkbox" data-check="b4a"><span>Saya memahami FOMO, revenge trading, dan overtrading.</span></label>
+    <label class="check"><input type="checkbox" data-check="b4b"><span>Saya memahami bahwa profit tidak selalu berarti keputusan saya benar.</span></label>
+    <label class="check"><input type="checkbox" data-check="b4c"><span>Saya memahami pentingnya mengendalikan risiko dan emosi.</span></label>
+  </div>
+  <div class="chapter-nav"><a class="btn secondary" href="#bab3">← Bab 3</a><a class="btn" href="#bab5">Bab 5 · Bahasa Dasar →</a></div>
+</section>
+
+<section class="chapter" id="bab5">
+  <div class="chapter-head"><div class="chapter-no">05 / 07</div><div><h2>Bahasa Dasar dalam Dunia Saham</h2><p class="lead">Tidak perlu menghafal semuanya sekaligus. Pahami maknanya, lalu lihat istilah tersebut berulang kali sampai terasa familiar.</p></div></div>
+  <div class="grid">
+    <details><summary>Lot</summary><p>Unit perdagangan saham. Di Indonesia, 1 lot umumnya = 100 lembar. <strong>Contoh:</strong> 3 lot = 300 lembar.</p></details>
+    <details><summary>Lembar saham</summary><p>Satu unit saham. <strong>Contoh:</strong> 250 lembar berarti kamu memiliki 250 unit saham.</p></details>
+    <details><summary>Bid</summary><p>Harga yang sedang ditawarkan pembeli. <strong>Contoh:</strong> bid Rp1.000 berarti ada minat beli pada harga tersebut.</p></details>
+    <details><summary>Offer</summary><p>Harga yang sedang diminta penjual. <strong>Contoh:</strong> offer Rp1.010 berarti ada minat jual pada harga tersebut.</p></details>
+    <details><summary>Volume</summary><p>Jumlah saham/lembar yang berpindah dalam transaksi selama periode tertentu. <strong>Contoh:</strong> volume besar berarti aktivitas perdagangan pada periode itu relatif ramai.</p></details>
+    <details><summary>Value</summary><p>Nilai uang dari transaksi. <strong>Contoh:</strong> harga × jumlah saham menghasilkan nilai transaksi sebelum biaya.</p></details>
+    <details><summary>Frequency</summary><p>Jumlah transaksi yang terjadi. <strong>Contoh:</strong> frekuensi tinggi menunjukkan banyak transaksi, meski tidak selalu berarti nilainya paling besar.</p></details>
+    <details><summary>Market Cap</summary><p>Kapitalisasi pasar, secara sederhana nilai pasar seluruh saham perusahaan. Rumus konsep: harga saham × jumlah saham beredar.</p></details>
+    <details><summary>Free Float</summary><p>Bagian saham yang tersedia untuk diperdagangkan oleh publik sesuai ketentuan yang berlaku. <strong>Contoh:</strong> free float membantu memberi konteks tentang saham yang relatif tersedia di pasar.</p></details>
+    <details><summary>Liquidity</summary><p>Seberapa mudah aset diperdagangkan tanpa memberi dampak harga yang terlalu besar. <strong>Contoh:</strong> saham dengan aktivitas transaksi tinggi cenderung lebih mudah keluar-masuk dibanding yang sangat sepi, tetapi tetap perlu melihat spread dan kedalaman pasar.</p></details>
+    <details><summary>Volatility</summary><p>Besarnya dan cepatnya perubahan harga. <strong>Contoh:</strong> harga yang bergerak tajam dalam waktu singkat memiliki volatilitas tinggi.</p></details>
+    <details><summary>Capital Gain</summary><p>Keuntungan dari kenaikan harga jual dibanding harga beli, sebelum memperhitungkan biaya/pajak yang relevan. <strong>Contoh:</strong> beli Rp1.000 lalu jual Rp1.100 → selisih Rp100 per lembar.</p></details>
+    <details><summary>Dividen</summary><p>Pembagian bagian laba perusahaan kepada pemegang saham sesuai keputusan dan ketentuan yang berlaku. <strong>Contoh:</strong> perusahaan mengumumkan dividen tunai per saham.</p></details>
+    <details><summary>Bullish</summary><p>Istilah untuk kondisi atau pandangan yang cenderung mengharapkan harga naik. <strong>Contoh:</strong> sentimen bullish berarti optimisme terhadap kenaikan harga.</p></details>
+    <details><summary>Bearish</summary><p>Istilah untuk kondisi atau pandangan yang cenderung mengharapkan harga turun. <strong>Contoh:</strong> pasar bearish berarti tekanan/ekspektasi penurunan lebih dominan.</p></details>
+    <details><summary>Sideways</summary><p>Harga bergerak dalam rentang relatif datar tanpa arah naik atau turun yang dominan. <strong>Contoh:</strong> harga bolak-balik di area yang mirip selama beberapa waktu.</p></details>
+  </div>
+  <div class="callout warn"><span class="label">Tips belajar istilah</span>Jangan mengejar hafalan. Setiap kali melihat istilah di aplikasi sekuritas atau berita, tanyakan: <strong>“Apa artinya dalam keputusan nyata?”</strong></div>
+  <h3>Checkpoint Bab 5</h3>
+  <div class="checklist">
+    <label class="check"><input type="checkbox" data-check="b5a"><span>Saya memahami lot, lembar, bid, dan offer.</span></label>
+    <label class="check"><input type="checkbox" data-check="b5b"><span>Saya memahami volume, value, frequency, dan market cap secara dasar.</span></label>
+    <label class="check"><input type="checkbox" data-check="b5c"><span>Saya memahami arti bullish, bearish, dan sideways.</span></label>
+  </div>
+  <div class="chapter-nav"><a class="btn secondary" href="#bab4">← Bab 4</a><a class="btn" href="#bab6">Bab 6 · Roadmap Belajar →</a></div>
+</section>
+
+<section class="chapter" id="bab6">
+  <div class="chapter-head"><div class="chapter-no">06 / 07</div><div><h2>Apa Saja yang Perlu Dipelajari?</h2><p class="lead">Trading bukan satu tombol. Ia adalah kumpulan kemampuan yang dibangun bertahap.</p></div></div>
+  <div class="grid">
+    <div class="card"><span class="label">LEVEL 1</span><h3>Memahami mekanisme pasar</h3><p>Kenali saham, lot, order, bid/offer, transaksi, jam perdagangan, rekening, dan cara kerja pasar.</p></div>
+    <div class="card"><span class="label">LEVEL 2</span><h3>Fundamental dasar</h3><p>Belajar membaca bisnis, pendapatan, laba, arus kas, utang, laporan keuangan, dan kualitas perusahaan secara dasar.</p></div>
+    <div class="card"><span class="label">LEVEL 3</span><h3>Technical analysis dasar</h3><p>Mulai dari membaca harga, tren, support/resistance, volume, dan struktur chart. Tidak perlu puluhan indikator.</p></div>
+    <div class="card"><span class="label">LEVEL 4</span><h3>Risk management</h3><p>Belajar ukuran posisi, batas risiko, rasio risiko/imbalan, dan bagaimana menghindari satu transaksi menghabiskan modal belajar.</p></div>
+    <div class="card"><span class="label">LEVEL 5</span><h3>Trading plan</h3><p>Tentukan kapan sebuah setup dianggap valid, kapan tidak valid, berapa risiko, dan bagaimana mengevaluasi hasil.</p></div>
+    <div class="card"><span class="label">LEVEL 6</span><h3>Eksekusi pasar</h3><p>Baru setelah fondasi cukup, pelajari order secara praktik, simulasi, jurnal transaksi, lalu evaluasi.</p></div>
+  </div>
+  <div class="callout tip"><span class="label">Jangan terburu-buru</span><strong>Kamu belum perlu langsung trading dengan uang sungguhan.</strong> Observasi chart, membaca laporan, mengikuti pergerakan pasar, dan simulasi dapat menjadi tahap belajar sebelum mengambil risiko uang nyata.</div>
+  <h3>Urutan yang masuk akal</h3>
+  <div class="flow"><div class="node">Paham</div><div class="arrow">→</div><div class="node">Amati</div><div class="arrow">→</div><div class="node">Simulasi</div><div class="arrow">→</div><div class="node">Buat rencana</div><div class="arrow">→</div><div class="node">Evaluasi</div></div>
+  <h3>Kesalahan pemula: terlalu banyak alat</h3>
+  <p>Indikator yang semakin banyak tidak otomatis membuat analisis semakin baik. Untuk tahap awal, lebih berguna memahami beberapa konsep dengan benar daripada mengoleksi istilah.</p>
+  <h3>Checkpoint Bab 6</h3>
+  <div class="checklist">
+    <label class="check"><input type="checkbox" data-check="b6a"><span>Saya memahami roadmap belajar dari mekanisme pasar sampai eksekusi.</span></label>
+    <label class="check"><input type="checkbox" data-check="b6b"><span>Saya tahu risk management harus dipelajari sebelum terlalu agresif.</span></label>
+    <label class="check"><input type="checkbox" data-check="b6c"><span>Saya bersedia belajar lewat observasi atau simulasi terlebih dahulu.</span></label>
+  </div>
+  <div class="chapter-nav"><a class="btn secondary" href="#bab5">← Bab 5</a><a class="btn" href="#bab7">Bab 7 · Checklist →</a></div>
+</section>
+
+<section class="chapter" id="bab7">
+  <div class="chapter-head"><div class="chapter-no">07 / 07</div><div><h2>Checklist Sebelum Mulai Trading</h2><p class="lead">Kalau beberapa kotak belum bisa kamu centang dengan yakin, tidak masalah. Itu justru menunjukkan apa yang perlu dipelajari berikutnya.</p></div></div>
+  <div class="callout tip"><span class="label">Target akhir ebook</span>Bukan “sudah jago trading”. Targetnya: <strong>kamu tahu apa yang kamu belum tahu.</strong> Itu fondasi yang jauh lebih sehat daripada rasa percaya diri palsu.</div>
+  <div class="checklist" id="finalChecklist">
+    <label class="check"><input type="checkbox" data-check="f1"><span>Saya memahami apa itu saham.</span></label>
+    <label class="check"><input type="checkbox" data-check="f2"><span>Saya memahami perbedaan trading dan investasi.</span></label>
+    <label class="check"><input type="checkbox" data-check="f3"><span>Saya memahami bahwa harga saham bisa turun.</span></label>
+    <label class="check"><input type="checkbox" data-check="f4"><span>Saya memahami bid dan offer.</span></label>
+    <label class="check"><input type="checkbox" data-check="f5"><span>Saya memahami volume dan value.</span></label>
+    <label class="check"><input type="checkbox" data-check="f6"><span>Saya memahami risiko trading.</span></label>
+    <label class="check"><input type="checkbox" data-check="f7"><span>Saya memahami FOMO dan overtrading.</span></label>
+    <label class="check"><input type="checkbox" data-check="f8"><span>Saya memahami pentingnya risk management.</span></label>
+    <label class="check"><input type="checkbox" data-check="f9"><span>Saya memahami bahwa analisis bukan jaminan keuntungan.</span></label>
+    <label class="check"><input type="checkbox" data-check="f10"><span>Saya siap belajar lebih lanjut sebelum menggunakan uang sungguhan.</span></label>
+  </div>
+  <div class="card" id="completionCard">
+    <span class="label">Progress</span><h3 id="completionTitle">0 / 10 selesai</h3><p id="completionText">Belum perlu terburu-buru. Baca ulang bagian yang masih terasa asing.</p>
+  </div>
+  <h3>Setelah ini, apa?</h3>
+  <p>Ebook berikutnya dapat masuk ke tahap yang lebih praktis: membaca chart, mengenal fundamental dan technical analysis lebih dalam, risk management, menyusun trading plan, membaca order, dan akhirnya memahami eksekusi pasar. Fondasi tetap menjadi syarat utamanya.</p>
+  <div class="callout danger"><span class="label">Pengingat</span>Materi ini adalah edukasi umum, bukan rekomendasi membeli atau menjual saham. Setiap keputusan finansial membawa risiko dan sebaiknya disesuaikan dengan kondisi serta kemampuan masing-masing.</div>
+  <div class="chapter-nav"><a class="btn secondary" href="#bab6">← Bab 6</a><a class="btn" href="#sumber">Lihat Sumber →</a></div>
+</section>
+
+<section class="chapter" id="sumber">
+  <div class="chapter-head"><div class="chapter-no">+ / SUMBER</div><div><h2>Sumber & Catatan</h2><p class="lead">Materi disusun sebagai pengantar fondasi. Untuk detail regulasi dan mekanisme terbaru, selalu cek sumber resmi.</p></div></div>
+  <div class="grid">
+    <div class="card sources"><span class="label">Sumber resmi</span><h3>OJK</h3><p>Gunakan Buku Saku Pasar Modal dan materi literasi OJK untuk memahami mekanisme, rekening, dan konsep pasar modal.</p><p><a href="https://ojk.go.id/id/berita-dan-kegiatan/publikasi/Documents/Pages/Buku-Saku-Pasar-Modal/BUKU%20SAKU%20PSR%20MODAL%20OJK%202023.pdf" target="_blank" rel="noopener">Buka Buku Saku Pasar Modal OJK ↗</a></p></div>
+    <div class="card sources"><span class="label">Sumber resmi</span><h3>OJK Pedia</h3><p>Glosarium OJK untuk istilah pasar modal dan keuangan.</p><p><a href="https://ojk.go.id/id/ojk-pedia/default.aspx" target="_blank" rel="noopener">Buka OJK Pedia ↗</a></p></div>
+  </div>
+  <div class="callout tip"><span class="label">Catatan versi</span>Versi ebook ini sengaja berhenti sebelum rekomendasi saham, sinyal buy/sell, target harga, strategi scalping kompleks, broker summary mendalam, dan setup entry. Tahap tersebut cocok dijadikan ebook lanjutan.</div>
+</section>
+</main>
+</div>
+
+<footer class="footer">
+  <strong>Trading Saham dari Nol</strong><br>
+  <span class="small">Fondasi dulu. Eksekusi belakangan.</span>
+</footer>
+
+<script>
+const $ = (s,root=document)=>root.querySelector(s);
+const $$ = (s,root=document)=>[...root.querySelectorAll(s)];
+const storageKey='trading-nol-checks-v1', themeKey='trading-nol-theme-v1';
+
+function loadChecks(){
+  let saved={}; try{saved=JSON.parse(localStorage.getItem(storageKey)||'{}')}catch(e){}
+  $$('[data-check]').forEach(el=>{
+    el.checked=!!saved[el.dataset.check];
+    el.closest('.check')?.classList.toggle('done',el.checked);
+  });
+  updateProgress();
+}
+function saveCheck(el){
+  let saved={}; try{saved=JSON.parse(localStorage.getItem(storageKey)||'{}')}catch(e){}
+  saved[el.dataset.check]=el.checked;
+  localStorage.setItem(storageKey,JSON.stringify(saved));
+  el.closest('.check')?.classList.toggle('done',el.checked);
+  updateProgress();
+}
+function updateProgress(){
+  const all=$$('[data-check]'), done=all.filter(x=>x.checked).length, pct=all.length?Math.round(done/all.length*100):0;
+  $('#chapterProgress').style.width=pct+'%'; $('#progressText').textContent=pct+'% checklist selesai';
+  const finals=$$('#finalChecklist [data-check]'), fd=finals.filter(x=>x.checked).length;
+  $('#completionTitle').textContent=fd+' / '+finals.length+' selesai';
+  $('#completionText').textContent=fd===finals.length?'Mantap. Kamu sudah menyelesaikan fondasi ebook ini.':'Belum perlu terburu-buru. Baca ulang bagian yang masih terasa asing.';
+}
+$$('[data-check]').forEach(el=>el.addEventListener('change',()=>saveCheck(el)));
+
+$$('.quiz').forEach(q=>{
+  $$('button',q).forEach(b=>b.addEventListener('click',()=>{
+    const result=$('.result',q), correct=q.dataset.answer;
+    if(!correct){result.textContent=(b.dataset.choice==='b')?'Tepat. Kembali ke rencana adalah respons yang lebih sehat.':'Belum tepat. Ingat: keputusan sebaiknya kembali ke rencana, bukan dorongan emosi.'; return;}
+    result.textContent=b.dataset.choice===correct?'✓ Tepat.':'Belum tepat. Coba pikirkan lagi konsep di bab ini.';
+  }));
+});
+
+function setTheme(t){document.documentElement.dataset.theme=t;localStorage.setItem(themeKey,t);$('#themeBtn').textContent=t==='dark'?'☀':'☾'}
+setTheme(localStorage.getItem(themeKey)||'light');
+$('#themeBtn').addEventListener('click',()=>setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark'));
+$('#resetBtn').addEventListener('click',()=>{
+  if(confirm('Reset semua checklist?')){
+    localStorage.removeItem(storageKey);loadChecks();
+  }
+});
+$('#menuBtn').addEventListener('click',()=>$('#sidebar').classList.toggle('open'));
+$$('.toc a').forEach(a=>a.addEventListener('click',()=>$('#sidebar').classList.remove('open')));
+
+const chapters=$$('.chapter');
+const tocLinks=$$('.toc a');
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      tocLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id));
+    }
+  });
+},{rootMargin:'-20% 0px -65% 0px',threshold:0});
+chapters.forEach(c=>observer.observe(c));
+
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement.scrollHeight-window.innerHeight;
+  $('#readProgress').style.width=(h>0?(window.scrollY/h)*100:0)+'%';
+},{passive:true});
+
+loadChecks();
+</script>
+</body>
+</html>
